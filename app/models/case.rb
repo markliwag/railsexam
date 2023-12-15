@@ -32,6 +32,10 @@ class Case < ApplicationRecord
     @previous_work_step ||= these_work_steps.select { |step| step.step_number == current_work_step.step_number - 1 }.first rescue nil
   end
 
+  def previous_step_number
+    previous_work_step&.step_number
+  end
+  
   def next_work_step
     @next_work_step ||= these_work_steps.select { |step| step.step_number == current_work_step.step_number + 1 }.first rescue nil
     if @current_work_step.blank? && applicant_has_been_notified?
@@ -40,6 +44,10 @@ class Case < ApplicationRecord
     @next_work_step
   end
 
+   def next_step_number
+    next_work_step&.step_number
+  end
+  
   def these_work_steps
     work_steps
   end
