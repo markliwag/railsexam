@@ -33,8 +33,6 @@ Adjust the value based on your application's requirements and performance consid
 4. Caching
 Use caching mechanisms to cache the JSON response or parts of it, especially if data doesn't change frequently. 
 def index
-  # ...
-  # Check if the JSON response is already cached
   if (cached_result = Rails.cache.read('cases_index_json'))
     render json: cached_result
   else
@@ -55,14 +53,12 @@ def index
       )
       .all
     render 'cases/index', formats: [:json], handlers: [:jbuilder], status: 201
-    # Cache the JSON response for future requests
     Rails.cache.write('cases_index_json', response.body, expires_in: 1.hour)
   end
 end
 
 5. Pagination
 Consider implementing pagination to load a limited set of records per request
-# cases_controller.rb
 def index
   page = params[:page] || 1
   per_page = params[:per_page] || 10
