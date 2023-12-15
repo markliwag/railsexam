@@ -12,15 +12,12 @@ With this, use 'Bullet' gem or Rails built in 'Bullet' feature to identify N+1 q
 
 2. Use includes to Eager Load Associations:
 In the CasesController#index action, use includes to eager load associations and avoid N+1 queries:
-
+```
 def index
-
   @cases = Case.includes(:institution, :work_steps:[:panels]).all
-  
   render 'cases/index', formats: [:json], handlers: [:jbuilder], status: 201
-  
 end
-
+```
 2. Select Only Necessary Fields: 
 Select only the fields that are needed for rendering the JSON response, reducing the amount of data fetched from the database:
 
